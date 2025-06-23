@@ -1,0 +1,11 @@
+mujoco
+numpy==1.23.0
+onnx
+onnxruntime
+loguru
+joblib
+easydict
+open3d
+lxml
+stl
+pygame

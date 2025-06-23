@@ -1,0 +1,11 @@
+*.log
+
+.idea/
+.vscode/
+.cursor/
+
+.DS_Store
+__pycache__
+
+*.TXT
+unitree_sdk2_python
