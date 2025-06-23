@@ -9,3 +9,5 @@ __pycache__
 
 *.TXT
 unitree_sdk2_python
+
+isaac_utils.egg-info
