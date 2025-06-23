@@ -68,6 +68,7 @@ class Controller:
         self.lowstate_subscriber.Init(self.LowStateHgHandler, 10)
         print("Subscriber initialized.")
 
+        # 部署实机前释放:
         # wait for the subscriber to receive data
         # self.wait_for_low_state()
 
@@ -92,12 +93,14 @@ class Controller:
     def zero_torque_state(self):
         print("Enter zero torque state.")
 
+        # 部署实机前释放:
         # print("Waiting for the start signal...")
         # while self.remote_controller.button[KeyMap.start] != 1:
         #     create_zero_cmd(self.low_cmd)
         #     self.send_cmd(self.low_cmd)
         #     time.sleep(self.config.control_dt)
 
+        # 释放上述代码后可注释此行
         input("等待按下回车键...")
 
         create_zero_cmd(self.low_cmd)
@@ -152,6 +155,7 @@ class Controller:
     def default_pos_state(self):
         print("Enter default pos state.")
         
+        # 部署实机钱前释放并进行相关缩进:
         # print("Waiting for the Button A signal...")
         # while self.remote_controller.button[KeyMap.A] != 1:
 
@@ -178,7 +182,6 @@ class Controller:
         self.counter += 1
 
         if self.counter % self.config.sim_config.control_decimation == 0:
-        # if 1:
             # Get the current joint position and velocity
             for i in range(len(self.dof_idx)):
                 self.qj[i] = self.low_state.motor_state[self.dof_idx[i]].q
@@ -297,6 +300,7 @@ if __name__ == "__main__":
         try:
             controller.run()
             # Press the select key to exit
+            # 部署实机前释放:
             # if controller.remote_controller.button[KeyMap.select] == 1:
             #     break
         except KeyboardInterrupt:
