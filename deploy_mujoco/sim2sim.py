@@ -218,7 +218,7 @@ if __name__ == "__main__":
 
     config = Sim2SimConfig()
     config.motion_config.motion_file = argparser.parse_args().motion_file
-    config.policy.policy = argparser.parse_args().policy
+    config.policy.policy_path = argparser.parse_args().policy
     logger.info(f"Loaded policy from {os.path.join(DEPLOY_ROOT, config.policy.policy_path)}")
 
     run_mujoco(config)
