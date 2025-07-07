@@ -44,6 +44,10 @@ python deploy_mujoco/sim2sim.py
 
 使用上述命令, 可以在 mujoco 中完成 siuu! 的相关动作
 
+<div align="center">
+<img src="img/siuu.gif" width="720px">
+</div>
+
 # 流程说明
 
 强化学习实现运动控制的基本流程为：
@@ -88,6 +92,10 @@ python deploy_mujoco/sim2sim.py --motion_file [MOTION_FILE_PATH] --policy [POLIC
 python deploy_mujoco/sim2sim.py --motion_file policy/bend_pick_up/bend_pick_box_up.pkl --policy_path policy/bend_pick_up/16000/model_16000_init_noise_1.0.onnx
 ```
 运行上述示例可以得到机器人弯腰拿东西的仿真.
+
+<div align="center">
+<img src="img/bend_pick_up.gif" width="720px">
+</div>
 
 ### 策略部署实机(sim2real)
 #### mujoco 仿真验证

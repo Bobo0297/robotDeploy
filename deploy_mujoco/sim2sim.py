@@ -48,7 +48,7 @@ def run_mujoco(config: Sim2SimConfig):
     num_actions = config.env.num_actions
     action = np.zeros(num_actions, dtype=np.float32)
     default_angles = config.robot_config.default_angles
-    init_angles = config.robot_config.bend_pick_init_angles
+    init_angles = config.robot_config.wushu_init_angles
     kps = config.robot_config.kps
     kds = config.robot_config.kds
     tau_limit = config.robot_config.tau_limit
@@ -100,13 +100,20 @@ def run_mujoco(config: Sim2SimConfig):
     elastic_band.enable = False
     band_attached_link = m.body("torso_link").id
 
-    # d.qpos[7:7 + len(target_dof_pos)] = default_angles + init_angles
-    d.qpos[7:7 + len(target_dof_pos)] = default_angles # 设置关节位置
+    d.qpos[7:7 + len(target_dof_pos)] = default_angles + init_angles
+    # d.qpos[7:7 + len(target_dof_pos)] = default_angles # 设置关节位置
     d.qvel[6:6 + len(target_dof_pos)] = [0] # 设置关节速度为 0
 
 
     counter = 0
     with mujoco.viewer.launch_passive(m, d, key_callback=elastic_band.MujuocoKeyCallback) as viewer:
+        # 相机设置
+        viewer.cam.type = mujoco.mjtCamera.mjCAMERA_TRACKING
+        viewer.cam.trackbodyid = m.body("torso_link").id  # 追踪的主体
+        viewer.cam.distance = 3.0       # 相机距离
+        viewer.cam.azimuth = 45         # 水平角度
+        viewer.cam.elevation = -20      # 俯仰角度
+
         input("Press Enter to start the simulation...")
         start = time.time()
         while viewer.is_running() and time.time() - start < simulation_duration:
