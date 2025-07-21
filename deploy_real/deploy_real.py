@@ -70,7 +70,7 @@ class Controller:
 
         # 部署实机前释放:
         # wait for the subscriber to receive data
-        # self.wait_for_low_state()
+        self.wait_for_low_state()
 
         # Initialize the command msg
         init_cmd_hg(self.low_cmd, self.mode_machine_, self.mode_pr_)
@@ -94,14 +94,14 @@ class Controller:
         print("Enter zero torque state.")
 
         # 部署实机前释放:
-        # print("Waiting for the start signal...")
-        # while self.remote_controller.button[KeyMap.start] != 1:
-        #     create_zero_cmd(self.low_cmd)
-        #     self.send_cmd(self.low_cmd)
-        #     time.sleep(self.config.control_dt)
+        print("Waiting for the start signal...")
+        while self.remote_controller.button[KeyMap.start] != 1:
+            create_zero_cmd(self.low_cmd)
+            self.send_cmd(self.low_cmd)
+            time.sleep(self.config.control_dt)
 
         # 释放上述代码后可注释此行
-        input("等待按下回车键...")
+        # input("等待按下回车键...")
 
         create_zero_cmd(self.low_cmd)
         self.send_cmd(self.low_cmd)
@@ -156,24 +156,24 @@ class Controller:
         print("Enter default pos state.")
         
         # 部署实机钱前释放并进行相关缩进:
-        # print("Waiting for the Button A signal...")
-        # while self.remote_controller.button[KeyMap.A] != 1:
+        print("Waiting for the Button A signal...")
+        while self.remote_controller.button[KeyMap.A] != 1:
 
-        for i in range(len(self.config.robot_config.dof_idx)):
-            motor_idx = self.config.robot_config.dof_idx[i]
-            self.low_cmd.motor_cmd[motor_idx].q = self.config.robot_config.default_angles[i]
-            self.low_cmd.motor_cmd[motor_idx].qd = 0
-            self.low_cmd.motor_cmd[motor_idx].kp = self.kps[motor_idx]
-            self.low_cmd.motor_cmd[motor_idx].kd = self.kds[motor_idx]
-            self.low_cmd.motor_cmd[motor_idx].tau = 0
+            for i in range(len(self.config.robot_config.dof_idx)):
+                motor_idx = self.config.robot_config.dof_idx[i]
+                self.low_cmd.motor_cmd[motor_idx].q = self.config.robot_config.default_angles[i]
+                self.low_cmd.motor_cmd[motor_idx].qd = 0
+                self.low_cmd.motor_cmd[motor_idx].kp = self.kps[motor_idx]
+                self.low_cmd.motor_cmd[motor_idx].kd = self.kds[motor_idx]
+                self.low_cmd.motor_cmd[motor_idx].tau = 0
 
-        for i in range(len(self.config.robot_config.other_dof_idx)):
-            motor_idx = self.config.robot_config.other_dof_idx[i]
-            self.low_cmd.motor_cmd[motor_idx].q = 0
-            self.low_cmd.motor_cmd[motor_idx].qd = 0
-            self.low_cmd.motor_cmd[motor_idx].kp = self.kps[motor_idx]
-            self.low_cmd.motor_cmd[motor_idx].kd = self.kds[motor_idx]
-            self.low_cmd.motor_cmd[motor_idx].tau = 0
+            for i in range(len(self.config.robot_config.other_dof_idx)):
+                motor_idx = self.config.robot_config.other_dof_idx[i]
+                self.low_cmd.motor_cmd[motor_idx].q = 0
+                self.low_cmd.motor_cmd[motor_idx].qd = 0
+                self.low_cmd.motor_cmd[motor_idx].kp = self.kps[motor_idx]
+                self.low_cmd.motor_cmd[motor_idx].kd = self.kds[motor_idx]
+                self.low_cmd.motor_cmd[motor_idx].tau = 0
 
         self.send_cmd(self.low_cmd)
         time.sleep(self.dt)
@@ -301,8 +301,8 @@ if __name__ == "__main__":
             controller.run()
             # Press the select key to exit
             # 部署实机前释放:
-            # if controller.remote_controller.button[KeyMap.select] == 1:
-            #     break
+            if controller.remote_controller.button[KeyMap.select] == 1:
+                break
         except KeyboardInterrupt:
             break
     # Enter the damping state
